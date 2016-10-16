@@ -1,0 +1,4 @@
+spring:
+  mvc.favicon.enabled: false
+  output.ansi.enabled: ALWAYS
+  h2.console.enabled: true
