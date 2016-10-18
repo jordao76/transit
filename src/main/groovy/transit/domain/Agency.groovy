@@ -1,21 +1,19 @@
 package transit.domain
 
-import java.time.*
-
 import javax.persistence.*
 
 import org.springframework.data.repository.*
 import org.springframework.stereotype.Repository
 
-
-@Entity class Agency {
+@Entity
+class Agency {
   @Id String id
   String name
-  URI url
-  ZoneId timezone
+  String url
+  String timezone
   String lang
   String phone
-  URI fareUrl
+  String fareUrl
   String email
   @OneToMany @JoinColumn(name="agency_id") List<Route> routes;
 }

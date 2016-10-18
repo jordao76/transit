@@ -29,7 +29,8 @@ dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
 	compile 'org.springframework.boot:spring-boot-starter-data-rest'
 	compile 'org.codehaus.groovy:groovy'
-  runtime 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+	compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-csv'
+	runtime 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 	runtime 'com.h2database:h2'
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
