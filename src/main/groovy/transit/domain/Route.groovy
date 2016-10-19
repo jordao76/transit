@@ -9,8 +9,8 @@ import javax.persistence.*
   String shortName;
   String longName;
   String desc;
-  int type;
-  URI url;
-  int color;
-  int textColor;
+  String type;
+  String url;
+  String color;
+  String textColor;
 }

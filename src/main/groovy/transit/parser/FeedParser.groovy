@@ -32,6 +32,17 @@ class FeedParser {
     }
   }
 
+  List<Route> parseRoutes(InputStream is) {
+    parseCsv(is) {
+      new Route(it.collectEntries {
+        if (it.key == 'agency_id')
+          [agency: new Agency(id: it.value)]
+        else
+          [(snakeToCamelCase(it.key - ~/^route_/)): it.value]
+      })
+    }
+  }
+
   private String snakeToCamelCase(String snakeCaseStr) {
     snakeCaseStr.replaceAll(/_\w/) { it[1].toUpperCase() }
   }
