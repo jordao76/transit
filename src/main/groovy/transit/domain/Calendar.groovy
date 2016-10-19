@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository
 
 
 @Entity class Calendar {
-  @Id @Column(name="service_id") String id;
+  @Id String id;
   boolean monday;
   boolean tuesday;
   boolean wednesday;
