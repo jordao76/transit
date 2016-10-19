@@ -2,8 +2,6 @@ package transit.domain
 
 import javax.persistence.*
 
-import org.springframework.data.repository.*
-import org.springframework.stereotype.Repository
 
 @Entity
 class Agency {
@@ -16,8 +14,4 @@ class Agency {
   String fareUrl
   String email
   @OneToMany @JoinColumn(name="agency_id") List<Route> routes;
-}
-
-@Repository
-interface AgencyRepository extends PagingAndSortingRepository<Agency, String> {
 }

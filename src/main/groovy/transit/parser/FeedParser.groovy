@@ -9,7 +9,7 @@ import com.fasterxml.jackson.dataformat.csv.*
 
 class FeedParser {
 
-  private dateFormat = DateTimeFormatter.ofPattern('yyyyMMdd')
+  private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern('yyyyMMdd')
 
   List<Agency> parseAgencies(InputStream is) {
     parseCsv(is) {

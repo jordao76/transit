@@ -3,7 +3,8 @@ package transit.domain
 import javax.persistence.*
 
 
-@Entity class Route {
+@Entity
+class Route {
   @Id String id;
   @ManyToOne Agency agency;
   String shortName;

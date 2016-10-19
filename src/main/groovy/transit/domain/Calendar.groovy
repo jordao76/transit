@@ -4,11 +4,9 @@ import java.time.*
 
 import javax.persistence.*
 
-import org.springframework.data.repository.*
-import org.springframework.stereotype.Repository
 
-
-@Entity class Calendar {
+@Entity
+class Calendar {
   @Id String id;
   boolean monday;
   boolean tuesday;
@@ -19,8 +17,4 @@ import org.springframework.stereotype.Repository
   boolean sunday;
   LocalDate startDate;
   LocalDate endDate;
-}
-
-@Repository
-interface CalendarRepository extends PagingAndSortingRepository<Calendar, String> {
 }
