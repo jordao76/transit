@@ -13,5 +13,5 @@ class Agency {
   String phone
   String fareUrl
   String email
-  @OneToMany @JoinColumn(name="agency_id") List<Route> routes;
+  @OneToMany @JoinColumn(name="agency_id") List<Route> routes
 }

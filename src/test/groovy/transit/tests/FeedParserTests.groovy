@@ -10,6 +10,8 @@ import transit.parser.*
 
 class FeedParserTests {
 
+  // note: the sample feed doesn't exercise all fields
+
   @Test
   void parseSampleFeedAgency() {
     def csv = new ClassPathResource("sample-feed/agency.txt").getInputStream()
@@ -54,6 +56,23 @@ class FeedParserTests {
     assert route.shortName == '40'
     assert route.longName == 'City'
     assert route.type == '3'
+  }
+
+  @Test
+  void parseSampleFeedTrips() {
+    def csv = new ClassPathResource("sample-feed/trips.txt").getInputStream()
+    def trips = new FeedParser().parseTrips(csv)
+    assert trips.size() == 11
+    // route_id,service_id,trip_id,trip_headsign,direction_id,block_id,shape_id
+    // AB,FULLW,AB1,to Bullfrog,0,1,
+    def trip = trips[0]
+    assert trip.route.id == 'AB'
+    assert trip.calendar.id == 'FULLW'
+    assert trip.id == 'AB1'
+    assert trip.headsign == 'to Bullfrog'
+    assert trip.direction == TripDirection.OUTBOUND
+    assert trip.blockId == '1'
+    assert trip.shapeId == ''
   }
 
 }

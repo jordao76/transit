@@ -43,6 +43,21 @@ class FeedParser {
     }
   }
 
+  List<Route> parseTrips(InputStream is) {
+    parseCsv(is) {
+      new Trip(it.collectEntries {
+        if (it.key == 'route_id')
+          [route: new Route(id: it.value)]
+        else if (it.key == 'service_id')
+          [calendar: new Calendar(id: it.value)]
+        else if (it.key == 'direction_id')
+          [direction: it.value == '1' ? TripDirection.INBOUND : TripDirection.OUTBOUND]
+        else
+          [(snakeToCamelCase(it.key - ~/^trip_/)): it.value]
+      })
+    }
+  }
+
   private String snakeToCamelCase(String snakeCaseStr) {
     snakeCaseStr.replaceAll(/_\w/) { it[1].toUpperCase() }
   }
