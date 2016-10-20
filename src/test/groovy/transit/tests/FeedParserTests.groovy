@@ -55,7 +55,7 @@ class FeedParserTests {
     assert route.agency.id == 'DTA'
     assert route.shortName == '40'
     assert route.longName == 'City'
-    assert route.type == '3'
+    assert route.type == TransportationType.BUS
   }
 
   @Test

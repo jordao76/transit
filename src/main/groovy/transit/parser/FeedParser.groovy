@@ -37,6 +37,8 @@ class FeedParser {
       new Route(it.collectEntries {
         if (it.key == 'agency_id')
           [agency: new Agency(id: it.value)]
+        else if (it.key == 'route_type')
+          [type: TransportationType.ofId(Integer.parseInt(it.value))]
         else
           [(snakeToCamelCase(it.key - ~/^route_/)): it.value]
       })
