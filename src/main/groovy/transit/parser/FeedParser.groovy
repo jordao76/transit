@@ -12,16 +12,16 @@ class FeedParser {
   private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern('yyyyMMdd')
 
   List<Agency> parseAgencies(InputStream is) {
-    parseCsv(is) {
-      new Agency(it.collectEntries {
+    parseCsv(is) { Map<String, String> map ->
+      new Agency(map.collectEntries {
         [(snakeToCamelCase(it.key - ~/^agency_/)): it.value]
       })
     }
   }
 
-  List<Agency> parseCalendars(InputStream is) {
-    parseCsv(is) {
-      new Calendar(it.collectEntries {
+  List<Calendar> parseCalendars(InputStream is) {
+    parseCsv(is) { Map<String, String> map ->
+      new Calendar(map.collectEntries {
         if (it.key == 'service_id')
           [id: it.value]
         else if (it.key in ['start_date', 'end_date'])
@@ -33,8 +33,8 @@ class FeedParser {
   }
 
   List<Route> parseRoutes(InputStream is) {
-    parseCsv(is) {
-      new Route(it.collectEntries {
+    parseCsv(is) { Map<String, String> map ->
+      new Route(map.collectEntries {
         if (it.key == 'agency_id')
           [agency: new Agency(id: it.value)]
         else if (it.key == 'route_type')
@@ -45,9 +45,9 @@ class FeedParser {
     }
   }
 
-  List<Route> parseTrips(InputStream is) {
-    parseCsv(is) {
-      new Trip(it.collectEntries {
+  List<Trip> parseTrips(InputStream is) {
+    parseCsv(is) { Map<String, String> map ->
+      new Trip(map.collectEntries {
         if (it.key == 'route_id')
           [route: new Route(id: it.value)]
         else if (it.key == 'service_id')
@@ -61,7 +61,7 @@ class FeedParser {
   }
 
   private String snakeToCamelCase(String snakeCaseStr) {
-    snakeCaseStr.replaceAll(/_\w/) { it[1].toUpperCase() }
+    snakeCaseStr.replaceAll(/_\w/) { String match -> match[1].toUpperCase() }
   }
 
   private <T> List<T> parseCsv(InputStream is, Closure<T> transform) {

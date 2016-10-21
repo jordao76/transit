@@ -17,6 +17,7 @@ class FeedParserTests {
     def csv = new ClassPathResource("sample-feed/agency.txt").getInputStream()
     def agencies = new FeedParser().parseAgencies(csv)
     assert agencies.size() == 1
+    // agency_id,agency_name,agency_url,agency_timezone
     // DTA,Demo Transit Authority,http://google.com,America/Los_Angeles
     def agency = agencies[0]
     assert agency.id == 'DTA'
@@ -30,6 +31,7 @@ class FeedParserTests {
     def csv = new ClassPathResource("sample-feed/calendar.txt").getInputStream()
     def calendars = new FeedParser().parseCalendars(csv)
     assert calendars.size() == 2
+    // service_id,monday,tuesday,wednesday,thursday,friday,saturday,sunday,start_date,end_date
     // WE,0,0,0,0,0,1,1,20070101,20101231
     def calendar = calendars[1]
     assert calendar.id == 'WE'
@@ -49,6 +51,7 @@ class FeedParserTests {
     def csv = new ClassPathResource("sample-feed/routes.txt").getInputStream()
     def routes = new FeedParser().parseRoutes(csv)
     assert routes.size() == 5
+    // route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_url,route_color,route_text_color
     // CITY,DTA,40,City,,3,,,
     def route = routes[3]
     assert route.id == 'CITY'
