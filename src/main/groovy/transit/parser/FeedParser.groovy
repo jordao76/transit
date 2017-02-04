@@ -10,6 +10,7 @@ import com.fasterxml.jackson.dataformat.csv.*
 class FeedParser {
 
   private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern('yyyyMMdd')
+  private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern('H:m:s')
 
   List<Agency> parseAgencies(InputStream is) {
     parseCsv(is) { Map<String, String> map ->
@@ -56,6 +57,21 @@ class FeedParser {
           [direction: it.value == '1' ? TripDirection.INBOUND : TripDirection.OUTBOUND]
         else
           [(snakeToCamelCase(it.key - ~/^trip_/)): it.value]
+      })
+    }
+  }
+
+  List<Frequency> parseFrequencies(InputStream is) {
+    parseCsv(is) { Map<String, String> map ->
+      new Frequency(map.collectEntries {
+        if (it.key == 'trip_id')
+          [trip: new Trip(id: it.value)]
+        else if (it.key in ['start_time', 'end_time'])
+          [(snakeToCamelCase(it.key)): LocalTime.parse(it.value, timeFormat)]
+        else if (it.key == 'headway_secs')
+          [headwaySecs: Integer.parseInt(it.value)]
+        else
+          [(snakeToCamelCase(it.key)): it.value]
       })
     }
   }

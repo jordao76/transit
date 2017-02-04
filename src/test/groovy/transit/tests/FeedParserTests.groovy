@@ -78,4 +78,18 @@ class FeedParserTests {
     assert trip.shapeId == ''
   }
 
+  @Test
+  void parseSampleFeedFrequencies() {
+    def csv = new ClassPathResource("sample-feed/frequencies.txt").getInputStream()
+    def frequencies = new FeedParser().parseFrequencies(csv)
+    assert frequencies.size() == 11
+    // trip_id,start_time,end_time,headway_secs
+    // STBA,6:00:00,22:00:00,1800
+    def frequency = frequencies[0]
+    assert frequency.trip.id == 'STBA'
+    assert frequency.startTime == LocalTime.of(6,0,0)
+    assert frequency.endTime == LocalTime.of(22,0,0)
+    assert frequency.headwaySecs == 1800
+  }
+
 }
